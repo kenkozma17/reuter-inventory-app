@@ -1,9 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <x-header>
-        Create Product
-    </x-header>
-
     <x-container>
         <form class="container" method="POST" action="{{route('products.store')}}">
             @csrf
@@ -15,7 +11,7 @@
                     <x-forms.input-number title="Product Quantity" name="quantity" />
                 </div>
                 <div class="col-4">
-                    <x-forms.input-number title="Product Price" name="price" />
+                    <x-forms.input-text title="Product Price" name="price" />
                 </div>
             </div>
             <div class="row">
@@ -27,6 +23,11 @@
                 </div>
                 <div class="col-4">
                     <x-forms.input-number title="Notification Quantity" name="notification_quantity" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <x-forms.input-select title="Category" name="category" :items="['Appliances', 'Tools', 'Carpentry']" />
                 </div>
             </div>
             <div class="row mb-3">

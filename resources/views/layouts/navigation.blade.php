@@ -16,9 +16,36 @@
 {{--                        {{ __('Dashboard') }}--}}
 {{--                    </x-nav-link>--}}
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
+                <div class="dropdown sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link class="has-dropdown" :href="route('products.index')" :active="request()->routeIs('products.*')">
                         Products
+                    </x-nav-link>
+                    <div class="dropdown-menu mt-0" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{route('products.index')}}">View All</a>
+                        <a class="dropdown-item" href="{{route('products.create')}}">Create A Product</a>
+                    </div>
+                </div>
+                <div class="dropdown sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link class="has-dropdown" :active="request()->routeIs('category.*')">
+                        Categories
+                    </x-nav-link>
+                    <div class="dropdown-menu mt-0" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{route('products.index')}}">View All</a>
+                        <a class="dropdown-item" href="{{route('products.create')}}">Create A Category</a>
+                    </div>
+                </div>
+                <div class="dropdown sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link class="has-dropdown" :active="request()->routeIs('transactions.*')">
+                        Transactions
+                    </x-nav-link>
+                    <div class="dropdown-menu mt-0" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{route('products.index')}}">View All</a>
+                        <a class="dropdown-item" href="{{route('products.create')}}">Create A Transaction</a>
+                    </div>
+                </div>
+                <div class="dropdown sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link class="has-dropdown" :active="request()->routeIs('transactions.*')">
+                        Notifications
                     </x-nav-link>
                 </div>
             </div>

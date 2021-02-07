@@ -21,8 +21,8 @@ class CreateProductsTable extends Migration
             $table->string('size', 75)->nullable();
             $table->string('color', 50)->nullable();
             $table->double('price')->nullable();
-            $table->boolean('has_notification')->nullable();
-            $table->boolean('notification_quantity')->nullable();
+            $table->boolean('has_notification')->default(0)->nullable();
+            $table->double('notification_quantity')->nullable();
             $table->timestamps();
         });
     }

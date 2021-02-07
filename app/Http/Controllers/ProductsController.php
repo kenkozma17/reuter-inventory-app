@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use \Illuminate\Support\Str;
 
 class ProductsController extends Controller
@@ -28,6 +29,7 @@ class ProductsController extends Controller
     public function create()
     {
         return view('products.create', [
+            'title' => 'Create Product',
             'products' => Product::all()
         ]);
     }
@@ -42,19 +44,23 @@ class ProductsController extends Controller
     {
         $data = $request->all();
         try {
-//            $validated = $request->validate([
-//                'name' => 'required|unique:products|max:75',
-//                'quantity' => 'required',
-//                'size' => 'required',
-//                'color' => 'required|string',
-//                'price' => 'required',
-//            ]);
-//            if($validated) {
-                $data['slug'] = Str::slug($data['name']);
-                $product = Product::create($data);
-//            }
-        } catch (\Exception $ex) {
+            $validator = Validator::make($data, [
+                'name' => 'required|unique:products|max:75',
+                'quantity' => 'required|numeric',
+                'price' => 'required|numeric',
+            ]);
 
+            if ($validator->fails()) {
+                return redirect('admin/products/create')->withErrors($validator)->withInput();
+            }
+
+            $data['slug'] = Str::slug($data['name']);
+            $product = new Product();
+            $product->fill($data);
+            $product->save();
+            return back()->with('success', 'Product Created Successfully');
+        } catch (\Exception $ex) {
+            return back()->with('error', $ex->getMessage())->withInput();
         }
     }
 

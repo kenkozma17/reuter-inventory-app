@@ -1,8 +1,15 @@
 @props(['title', 'smallText' => '', 'name'])
 <div class="form-group">
     <label>{{$title}}</label>
-    <input type="text" class="form-control" name="{{$name}}" placeholder="Enter {{$title}}">
+    <input type="text"
+           class="form-control {{$errors->has($name) ? 'border-red-500' : ''}}"
+           name="{{$name}}"
+           placeholder="Enter {{$title}}"
+           value="{{ old($name) }}">
     @if($smallText)
         <small class="form-text text-muted">{{$smallText}}</small>
+    @endif
+    @if ($errors->has($name))
+        <span class="text-danger">{{ $errors->first($name) }}</span>
     @endif
 </div>

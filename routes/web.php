@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/', [HomeController::class, 'index']);
 
     Route::prefix('admin')->group(function(){
+        Route::get('/products/all', [ProductsController::class, 'getProducts']);
         Route::resource('products', ProductsController::class);
     });
 });

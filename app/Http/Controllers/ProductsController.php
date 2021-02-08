@@ -17,7 +17,8 @@ class ProductsController extends Controller
     public function index()
     {
         return view('products.index', [
-            'products' => Product::all()
+            'title' => 'Products',
+            'products' => Product::paginate(config('utilities.pagination.count', 10))->toJson()
         ]);
     }
 
@@ -107,5 +108,17 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getProducts(Request $request) {
+        $query = $request->get('query');
+        $products = Product::where('name', 'LIKE', '%'. $query. '%')
+            ->paginate(
+                config('utilities.pagination.count', 10),
+                ['*'],
+                'page',
+                $request->get('page'));
+
+        return response()->json(['results' => $products]);
     }
 }

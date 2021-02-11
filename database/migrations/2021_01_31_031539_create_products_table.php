@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->double('price')->nullable();
             $table->boolean('has_notification')->default(0)->nullable();
             $table->double('notification_quantity')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -34,6 +35,9 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
         Schema::dropIfExists('products');
     }
 }

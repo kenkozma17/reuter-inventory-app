@@ -2,7 +2,7 @@
         <div class="max-w-7xl mx-auto" data-app>
             <v-card>
                 <v-card-title>
-                    Products
+                    Categories
                     <v-spacer></v-spacer>
                     <v-text-field
                             v-model="search"
@@ -19,16 +19,10 @@
                         :options.sync="options"
                         :server-items-length="totalItems">
                     <template v-slot:item.name="{ item }">
-                        <a :href="'/admin/products/' + item.id + '/edit'">{{item.name}}</a>
-                    </template>
-                    <template v-slot:item.has_notification="{ item }">
-                        <v-chip class="ma-2 text-white v-chip--active"
-                                :class="item.has_notification ? 'bg-green-500' : 'bg-red-500'">
-                            {{ item.has_notification ? 'Yes' : 'No'}}
-                        </v-chip>
+                        <a :href="'/admin/categories/' + item.id + '/edit'">{{item.name}}</a>
                     </template>
                     <template v-slot:item.action="{item}">
-                        <a @click="deleteProduct(item.id)" class="btn btn-danger text-white">Delete</a>
+                        <a @click="deleteCategory(item.id)" class="btn btn-danger text-white">Delete</a>
                     </template>
                 </v-data-table>
             </v-card>
@@ -55,11 +49,7 @@
                     sortDesc: []
                 },
                 headers: [
-                    {text: 'Product Name', value: 'name',},
-                    { text: 'Quantity', value: 'quantity' },
-                    { text: 'Size', value: 'size' },
-                    { text: 'Color', value: 'color' },
-                    { text: 'Notifications Enabled?', value: 'has_notification' },
+                    {text: 'Category Name', value: 'name'},
                     { text: 'Actions', value: 'action' },
                 ],
                 items: this.data.data ? this.data.data : [],
@@ -74,25 +64,25 @@
             },
             options: {
                 handler () {
-                    this.getProducts();
+                    this.getCategories();
                 }
             },
         },
         methods: {
-            deleteProduct(id) {
+            deleteCategory(id) {
                 if(confirm('Are you sure you want to delete this product?')) {
-                    axios.delete(`/admin/products/${id}`)
+                    axios.delete(`/admin/categories/${id}`)
                         .then(response => {
                             if(response.data.success) {
-                                this.getProducts();
+                                this.getCategories();
                             }
                         })
                 }
             },
-            getProducts() {
+            getCategories() {
                 if(this.dataLoaded) {
                     this.loading = true;
-                    axios.get('/admin/products/all', {params: {query: this.search, page: this.options.page}})
+                    axios.get('/admin/categories/all', {params: {query: this.search, page: this.options.page}})
                         .then(response => {
                             const results = response.data.results;
                             this.items = results.data;
@@ -103,7 +93,7 @@
                 }
             },
             searchProducts: _.debounce(function(){
-                this.getProducts();
+                this.getCategories();
             }, 750),
         },
         mounted() {

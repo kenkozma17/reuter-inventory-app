@@ -6,11 +6,10 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use \Illuminate\Support\Str;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-
-class ProductsController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +18,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return view('products.index', [
-            'title' => 'Products',
-            'products' => Product::paginate(config('utilities.pagination.count', 10))->toJson()
+        return view('categories.index', [
+            'title' => 'Categories',
+            'categories' => Category::paginate(config('utilities.pagination.count', 10))->toJson()
         ]);
     }
 
@@ -32,13 +31,8 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $categories = $categories->mapWithKeys(function($item) {
-            return [$item['id'] => $item['name']];
-        });
-        return view('products.create', [
-            'title' => 'Create Product',
-            'categories' => $categories
+        return view('categories.create', [
+            'title' => 'Create Category'
         ]);
     }
 
@@ -53,20 +47,18 @@ class ProductsController extends Controller
         $data = $request->all();
         try {
             $validator = Validator::make($data, [
-                'name' => 'required|unique:products|max:75',
-                'quantity' => 'required|numeric',
-                'price' => 'required|numeric',
+                'name' => 'required|unique:categories|max:75',
             ]);
 
             if ($validator->fails()) {
-                return redirect('admin/products/create')->withErrors($validator)->withInput();
+                return redirect('admin/categories/create')->withErrors($validator)->withInput();
             }
 
             $data['slug'] = Str::slug($data['name']);
-            $product = new Product();
-            $product->fill($data);
-            $product->save();
-            return back()->with('success', 'Product Created Successfully');
+            $category = new Category();
+            $category->fill($data);
+            $category->save();
+            return back()->with('success', 'Category Created Successfully');
         } catch (\Exception $ex) {
             return back()->with('error', $ex->getMessage())->withInput();
         }
@@ -91,9 +83,9 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        return view('products.edit', [
-            'title' => 'Edit Product',
-            'product' => Product::where('id', $id)->first()
+        return view('categories.edit', [
+            'title' => 'Edit Category',
+            'category' => Category::where('id', $id)->first()
         ]);
     }
 
@@ -109,21 +101,18 @@ class ProductsController extends Controller
         $data = $request->all();
         try {
             $validator = Validator::make($data, [
-                'name' => ['required', Rule::unique('products')->ignore($id)],
-                'quantity' => 'required|numeric',
-                'price' => 'required|numeric',
+                'name' => ['required', Rule::unique('categories')->ignore($id)],
             ]);
 
             if ($validator->fails()) {
-                return redirect('admin/products/'.$id.'/edit/')->withErrors($validator)->withInput();
+                return redirect('admin/categories/'.$id.'/edit')->withErrors($validator)->withInput();
             }
 
             $data['slug'] = Str::slug($data['name']);
-            isset($data['has_notification']) ? $data['has_notification'] = true : $data['has_notification'] = false;
-            $product = Product::find($id);
-            $product->fill($data);
-            $product->save();
-            return back()->with('success', 'Product Updated Successfully');
+            $category = Category::find($id);
+            $category->fill($data);
+            $category->save();
+            return back()->with('success', 'Category Updated Successfully');
         } catch (\Exception $ex) {
             return back()->with('error', $ex->getMessage())->withInput();
         }
@@ -137,22 +126,18 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
-        if($product) {
-            $product->delete();
-            return response()->json(['success' => true]);
-        }
+        //
     }
 
-    public function getProducts(Request $request) {
+    public function getCategories(Request $request) {
         $query = $request->get('query');
-        $products = Product::where('name', 'LIKE', '%'. $query. '%')
+        $categories = Category::where('name', 'LIKE', '%'. $query. '%')
             ->paginate(
                 config('utilities.pagination.count', 10),
                 ['*'],
                 'page',
                 $request->get('page'));
 
-        return response()->json(['results' => $products]);
+        return response()->json(['results' => $categories]);
     }
 }

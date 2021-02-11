@@ -1,11 +1,11 @@
-@props(['title', 'smallText' => '', 'name'])
+@props(['title', 'smallText' => '', 'name', 'value' => ''])
 <div class="form-group">
     <label>{{$title}}</label>
     <input type="text"
            class="form-control {{$errors->has($name) ? 'border-red-500' : ''}}"
            name="{{$name}}"
            placeholder="Enter {{$title}}"
-           value="{{ old($name) }}">
+           value="{{ $value ? $value : old($name) }}">
     @if($smallText)
         <small class="form-text text-muted">{{$smallText}}</small>
     @endif

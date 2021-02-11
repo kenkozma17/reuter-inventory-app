@@ -27,7 +27,7 @@
             </div>
             <div class="row">
                 <div class="col-4">
-                    <x-forms.input-select title="Category" name="category" :items="['Appliances', 'Tools', 'Carpentry']" />
+                    <x-forms.input-select title="Category" name="category" :items="$categories" />
                 </div>
             </div>
             <div class="row mb-3">

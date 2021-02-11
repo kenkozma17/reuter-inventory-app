@@ -26,12 +26,12 @@
                     </div>
                 </div>
                 <div class="dropdown sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link class="has-dropdown" :active="request()->routeIs('category.*')">
+                    <x-nav-link class="has-dropdown" :active="request()->routeIs('categories.*')">
                         Categories
                     </x-nav-link>
                     <div class="dropdown-menu mt-0" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{route('products.index')}}">View All</a>
-                        <a class="dropdown-item" href="{{route('products.create')}}">Create A Category</a>
+                        <a class="dropdown-item" href="{{route('categories.index')}}">View All</a>
+                        <a class="dropdown-item" href="{{route('categories.create')}}">Create A Category</a>
                     </div>
                 </div>
                 <div class="dropdown sm:-my-px sm:ml-10 sm:flex">

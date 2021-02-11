@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
+use \App\Http\Controllers\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,13 @@ Route::middleware('auth')->group(function(){
     Route::get('/', [HomeController::class, 'index']);
 
     Route::prefix('admin')->group(function(){
+        // Products
         Route::get('/products/all', [ProductsController::class, 'getProducts']);
         Route::resource('products', ProductsController::class);
+
+        // Categories
+        Route::get('/categories/all', [CategoriesController::class, 'getCategories']);
+        Route::resource('categories', CategoriesController::class);
     });
 });
 

@@ -5,9 +5,9 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex-grow-0 flex items-center">
-                    <a>
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
-                    </a>
+                    <x-nav-link href="/" :active="request()->routeIs('home')">
+                        Home
+                    </x-nav-link>
                 </div>
 
                 <!-- Navigation Links -->
@@ -21,27 +21,21 @@
                         Products
                     </x-nav-link>
                     <div class="dropdown-menu mt-0" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{route('products.index')}}">View All</a>
                         <a class="dropdown-item" href="{{route('products.create')}}">Create A Product</a>
                     </div>
                 </div>
                 <div class="dropdown sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link class="has-dropdown" :active="request()->routeIs('categories.*')">
+                    <x-nav-link class="has-dropdown" :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         Categories
                     </x-nav-link>
                     <div class="dropdown-menu mt-0" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{route('categories.index')}}">View All</a>
                         <a class="dropdown-item" href="{{route('categories.create')}}">Create A Category</a>
                     </div>
                 </div>
                 <div class="dropdown sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link class="has-dropdown" :active="request()->routeIs('transactions.*')">
+                    <x-nav-link class="has-dropdown" :href="route('transactions.index')" :active="request()->routeIs('transactions.*')">
                         Transactions
                     </x-nav-link>
-                    <div class="dropdown-menu mt-0" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{route('products.index')}}">View All</a>
-                        <a class="dropdown-item" href="{{route('products.create')}}">Create A Transaction</a>
-                    </div>
                 </div>
                 <div class="dropdown sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link class="has-dropdown" :active="request()->routeIs('transactions.*')">

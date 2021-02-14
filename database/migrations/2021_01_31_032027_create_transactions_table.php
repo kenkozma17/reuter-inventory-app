@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->string('customer_name', 75)->nullable();
             $table->double('quantity')->nullable();
+            $table->double('previous_quantity')->nullable();
             $table->string('transaction_number', 75)->nullable();
             $table->text('comments')->nullable();
             $table->string('type')->nullable();

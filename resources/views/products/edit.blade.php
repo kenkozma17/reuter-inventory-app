@@ -4,31 +4,34 @@
         <form class="container" method="POST" action="{{route('products.update', $product->id)}}">
             <input name="_method" type="hidden" value="PUT">
             @csrf
+            <div class="mb-3">
+                <h2 class="h2">Product: <span class="font-bold">{{$product->name}}</span></h2>
+                <h3 class="h3">Quantity: <span class="font-bold">{{$product->quantity}}</span></h3>
+                <hr class="mt-3">
+            </div>
             <div class="row">
                 <div class="col-4">
                     <x-forms.input-text title="Product Name" name="name" value="{{$product->name}}" />
                 </div>
+{{--                <div class="col-4">--}}
+{{--                    <x-forms.input-number disabled title="Product Quantity" name="quantity" value="{{$product->quantity}}" />--}}
+{{--                </div>--}}
                 <div class="col-4">
-                    <x-forms.input-number title="Product Quantity" name="quantity" value="{{$product->quantity}}" />
+                    <x-forms.input-text title="Product Price (PHP)" name="price" value="{{$product->price}}" />
                 </div>
-                <div class="col-4">
-                    <x-forms.input-text title="Product Price" name="price" value="{{$product->price}}" />
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-4">
                     <x-forms.input-text title="Product Size" name="size" value="{{$product->size}}"/>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-4">
                     <x-forms.input-text title="Product Color" name="color" value="{{$product->color}}" />
                 </div>
                 <div class="col-4">
                     <x-forms.input-number title="Notification Quantity" name="notification_quantity" value="{{$product->notification_quantity}}" />
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-4">
-                    <x-forms.input-select title="Category" name="category" :items="['Appliances', 'Tools', 'Carpentry']" />
+                    <x-forms.input-select title="Category" name="category_id" :items="$categories" />
                 </div>
             </div>
             <div class="row mb-3">

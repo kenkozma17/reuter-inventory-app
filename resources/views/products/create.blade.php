@@ -11,7 +11,7 @@
                     <x-forms.input-number title="Product Quantity" name="quantity" />
                 </div>
                 <div class="col-4">
-                    <x-forms.input-text title="Product Price" name="price" />
+                    <x-forms.input-text title="Product Price (PHP)" name="price" />
                 </div>
             </div>
             <div class="row">

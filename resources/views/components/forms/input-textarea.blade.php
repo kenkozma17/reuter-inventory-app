@@ -1,12 +1,10 @@
-@props(['disabled' => false, 'title', 'smallText' => '', 'name', 'value' => ''])
+@props(['title', 'smallText' => '', 'name', 'value' => ''])
 <div class="form-group">
     <label>{{$title}}</label>
-    <input type="number"
+    <textarea type="text"
            class="form-control {{$errors->has($name) ? 'border-red-500' : ''}}"
            name="{{$name}}"
-           {{$disabled ? 'disabled="disabled"' : ''}}
-           value="{{ $value ? $value : old($name) }}"
-           placeholder="Enter {{$title}}">
+           placeholder="Enter {{$title}}">{{ $value ? $value : old($name) }}</textarea>
     @if($smallText)
         <small class="form-text text-muted">{{$smallText}}</small>
     @endif

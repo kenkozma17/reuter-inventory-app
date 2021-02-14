@@ -20,7 +20,7 @@ class CategoriesController extends Controller
     {
         return view('categories.index', [
             'title' => 'Categories',
-            'categories' => Category::paginate(config('utilities.pagination.count', 10))->toJson()
+            'categories' => Category::orderBy('name', 'asc')->paginate(config('utilities.pagination.count', 10))->toJson()
         ]);
     }
 

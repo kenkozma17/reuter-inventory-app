@@ -21,7 +21,8 @@ class ProductsController extends Controller
     {
         return view('products.index', [
             'title' => 'Products',
-            'products' => Product::paginate(config('utilities.pagination.count', 10))->toJson()
+            'products' => Product::orderBy('name', 'desc')
+                            ->paginate(config('utilities.pagination.count', 10))->toJson()
         ]);
     }
 
@@ -32,9 +33,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('name', 'asc')->get();
         $categories = $categories->mapWithKeys(function($item) {
-            return [$item['id'] => $item['name']];
+            return [$item->id => $item->name];
         });
         return view('products.create', [
             'title' => 'Create Product',
@@ -91,9 +92,14 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
+        $categories = Category::orderBy('name', 'asc')->get();
+        $categories = $categories->mapWithKeys(function($item) {
+            return [$item->id => $item->name];
+        });
         return view('products.edit', [
             'title' => 'Edit Product',
-            'product' => Product::where('id', $id)->first()
+            'product' => Product::where('id', $id)->first(),
+            'categories' => $categories
         ]);
     }
 
@@ -110,7 +116,7 @@ class ProductsController extends Controller
         try {
             $validator = Validator::make($data, [
                 'name' => ['required', Rule::unique('products')->ignore($id)],
-                'quantity' => 'required|numeric',
+//                'quantity' => 'required|numeric',
                 'price' => 'required|numeric',
             ]);
 

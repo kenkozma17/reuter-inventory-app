@@ -18,6 +18,9 @@
                         :loading="loading"
                         :options.sync="options"
                         :server-items-length="totalItems">
+                    <template v-slot:item.trans="{ item }">
+                        <a class="btn btn-primary text-white" :href="'/admin/transactions/add/' + item.id">Create Transaction</a>
+                    </template>
                     <template v-slot:item.name="{ item }">
                         <a :href="'/admin/products/' + item.id + '/edit'">{{item.name}}</a>
                     </template>
@@ -55,7 +58,8 @@
                     sortDesc: []
                 },
                 headers: [
-                    {text: 'Product Name', value: 'name',},
+                    { text: 'Actions', value: 'trans',},
+                    { text: 'Product Name', value: 'name',},
                     { text: 'Quantity', value: 'quantity' },
                     { text: 'Size', value: 'size' },
                     { text: 'Color', value: 'color' },

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        @foreach($products as $product)
-            <li>{{$product->name}}</li>
-        @endforeach
+        <v-app>
+            <products-datatable :data="{{$products}}" />
+        </v-app>
     </div>
 @endsection

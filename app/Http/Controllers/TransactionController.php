@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\User;
+use App\Notifications\LowStock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class TransactionController extends Controller
@@ -54,7 +57,7 @@ class TransactionController extends Controller
             $validator = Validator::make($data, [
                 'quantity' => 'required|numeric',
                 'transaction_number' => 'required|string',
-                'type' => 'required|string|not_in:0',
+                'type' => 'required|string',
             ]);
 
             if ($validator->fails()) {
@@ -92,7 +95,15 @@ class TransactionController extends Controller
                     break;
             }
             $product->save();
+            if($product->has_notification && $this->isLowQuantity($product->quantity, $product->notification_quantity)) {
+                $users = User::all();
+                Notification::send($users, new LowStock($product));
+            }
         }
+    }
+
+    public function isLowQuantity($currentQuantity, $lowQuantity) {
+        return $currentQuantity < $lowQuantity;
     }
 
     /**

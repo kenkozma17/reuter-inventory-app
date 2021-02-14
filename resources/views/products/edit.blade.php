@@ -31,7 +31,7 @@
                     <x-forms.input-number title="Notification Quantity" name="notification_quantity" value="{{$product->notification_quantity}}" />
                 </div>
                 <div class="col-4">
-                    <x-forms.input-select title="Category" name="category_id" :items="$categories" />
+                    <x-forms.input-select title="Category" name="category_id" :value="$product->category_id" :items="$categories" />
                 </div>
             </div>
             <div class="row mb-3">

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
 use \App\Http\Controllers\CategoriesController;
 use \App\Http\Controllers\TransactionController;
+use \App\Http\Controllers\NotificationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,9 @@ Route::middleware('auth')->group(function(){
         Route::get('/transactions/add/{productId}', [TransactionController::class, 'createTransaction']);
         Route::post('/transactions/store/{productId}', [TransactionController::class, 'store'])->name('transactions.store');
         Route::get('/transactions/show/{transactionId}', [TransactionController::class, 'show'])->name('transactions.show');
-//        Route::resource('transactions',TransactionController::class);
+
+        // Notifications
+        Route::resource('notifications',NotificationsController::class);
     });
 });
 

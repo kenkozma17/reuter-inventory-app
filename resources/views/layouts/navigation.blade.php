@@ -38,8 +38,9 @@
                     </x-nav-link>
                 </div>
                 <div class="dropdown sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link class="has-dropdown" :active="request()->routeIs('transactions.*')">
+                    <x-nav-link class="has-dropdown" :href="route('notifications.index')" :active="request()->routeIs('transactions.*')">
                         Notifications
+                        <span class="ml-2 hover:border-0 badge badge-danger">{{auth()->user()->unreadNotifications->count()}}</span>
                     </x-nav-link>
                 </div>
             </div>

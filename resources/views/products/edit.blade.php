@@ -52,4 +52,7 @@
             <button type="submit" class="btn btn-primary">Update Product</button>
         </form>
     </x-container>
+    <v-app>
+        <transaction-datatable :data='{{$transactions}}' product='{{$product->id}}' ></transaction-datatable>
+    </v-app>
 @endsection

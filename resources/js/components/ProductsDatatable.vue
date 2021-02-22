@@ -91,6 +91,9 @@
                                 this.getProducts();
                             }
                         })
+                        .finally(() => {
+                            alert('Product Deleted Successfully!');
+                        });
                 }
             },
             getProducts() {

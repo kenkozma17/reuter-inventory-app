@@ -3876,11 +3876,13 @@ var debounce = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash
     deleteCategory: function deleteCategory(id) {
       var _this = this;
 
-      if (confirm('Are you sure you want to delete this product?')) {
+      if (confirm('Are you sure you want to delete this category?')) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().delete("/admin/categories/".concat(id)).then(function (response) {
           if (response.data.success) {
             _this.getCategories();
           }
+        })["finally"](function () {
+          alert('Category Deleted Successfully!');
         });
       }
     },
@@ -4038,6 +4040,8 @@ var debounce = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash
           if (response.data.success) {
             _this.getProducts();
           }
+        })["finally"](function () {
+          alert('Product Deleted Successfully!');
         });
       }
     },
@@ -4146,7 +4150,7 @@ __webpack_require__.r(__webpack_exports__);
 var debounce = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash.debounce/index.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['data'],
+  props: ['data', 'product'],
   data: function data() {
     return {
       search: '',
@@ -4182,7 +4186,8 @@ var debounce = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash
       }],
       items: this.data.data ? this.data.data : [],
       totalItems: this.data.total ? this.data.total : [],
-      dataLoaded: false
+      dataLoaded: false,
+      productId: this.product ? this.product : 0
     };
   },
   watch: {
@@ -4202,10 +4207,12 @@ var debounce = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash
 
       if (this.dataLoaded) {
         this.loading = true;
-        axios__WEBPACK_IMPORTED_MODULE_0___default().get('/admin/transactions/all', {
+        var path = this.productId ? 'by-product' : 'all';
+        axios__WEBPACK_IMPORTED_MODULE_0___default().get("/admin/transactions/".concat(path), {
           params: {
             query: this.search,
-            page: this.options.page
+            page: this.options.page,
+            product: this.productId
           }
         }).then(function (response) {
           var results = response.data.results;
@@ -41460,23 +41467,6 @@ var render = function() {
                 }
               },
               {
-                key: "item.product_quantity",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    item.product
-                      ? [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(item.product.quantity) +
-                              "\n                "
-                          )
-                        ]
-                      : _vm._e()
-                  ]
-                }
-              },
-              {
                 key: "item.product_id",
                 fn: function(ref) {
                   var item = ref.item
@@ -41492,6 +41482,23 @@ var render = function() {
                               }
                             },
                             [_vm._v(_vm._s(item.product.name))]
+                          )
+                        ]
+                      : _vm._e()
+                  ]
+                }
+              },
+              {
+                key: "item.product_quantity",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    item.product
+                      ? [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(item.product.quantity) +
+                              "\n                "
                           )
                         ]
                       : _vm._e()

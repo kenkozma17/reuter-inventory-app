@@ -1,3 +1,7 @@
+@php
+use Carbon\Carbon;
+$carbon = new Carbon();
+@endphp
 @extends('layouts.app')
 @section('content')
     <x-container>
@@ -7,7 +11,7 @@
                     <div class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1 font-weight-bold">{{ $notification->data['product']['name'] }}</h5>
-                            <small>3 days ago</small>
+                            <small>{{$carbon->parse($notification->created_at)->diffForHumans()}}</small>
                         </div>
                         <p class="mb-1">
                             {{ $notification->data['details'] }}

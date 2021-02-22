@@ -70,12 +70,15 @@
         },
         methods: {
             deleteCategory(id) {
-                if(confirm('Are you sure you want to delete this product?')) {
+                if(confirm('Are you sure you want to delete this category?')) {
                     axios.delete(`/admin/categories/${id}`)
                         .then(response => {
                             if(response.data.success) {
                                 this.getCategories();
                             }
+                        })
+                        .finally(() => {
+                            alert('Category Deleted Successfully!');
                         })
                 }
             },

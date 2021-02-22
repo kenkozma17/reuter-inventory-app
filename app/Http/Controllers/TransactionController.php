@@ -21,6 +21,9 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::orderBy('created_at', 'desc')
             ->with('product')
+            ->whereHas('product', function($q){
+                $q->where('deleted_at', NULL);
+            })
             ->paginate(config('utilities.pagination.count', 10))
             ->toJson();
         return view('transactions.index', [
@@ -157,8 +160,28 @@ class TransactionController extends Controller
 
     public function getTransactions(Request $request) {
         $query = $request->get('query');
-        $transactions = Transaction::where('transaction_number', 'LIKE', '%'. $query. '%')
-            ->where('customer_name', 'LIKE', '%'. $query. '%')
+        $transactions = Transaction::with('product')
+            ->orWhereHas('product', function($q) use ($query){
+                $q->where('deleted_at', NULL)->where('name', 'LIKE', '%'. $query. '%');
+            })
+            ->paginate(
+                config('utilities.pagination.count', 10),
+                ['*'],
+                'page',
+                $request->get('page'));
+
+        return response()->json(['results' => $transactions]);
+    }
+
+    public function getTransactionsByProduct(Request $request) {
+        $query = $request->get('query');
+        $productId = $request->get('product');
+        $transactions = Transaction::with('product')
+            ->orWhereHas('product', function($q) use ($query, $productId){
+                $q->where('deleted_at', NULL)
+                    ->where('name', 'LIKE', '%'. $query. '%')
+                    ->where('id', $productId);
+            })
             ->paginate(
                 config('utilities.pagination.count', 10),
                 ['*'],

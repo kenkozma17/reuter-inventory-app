@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use \Illuminate\Support\Str;
@@ -99,7 +100,11 @@ class ProductsController extends Controller
         return view('products.edit', [
             'title' => 'Edit Product',
             'product' => Product::where('id', $id)->first(),
-            'categories' => $categories
+            'categories' => $categories,
+            'transactions' => Transaction::where('product_id', $id)
+                ->with('product')
+                ->paginate(
+                config('utilities.pagination.count', 10))->toJson()
         ]);
     }
 

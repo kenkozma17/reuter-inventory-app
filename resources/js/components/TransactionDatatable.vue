@@ -24,14 +24,14 @@
                         <span>{{item.transaction_number}}</span>
                     </template>
                 </template>
-                <template v-slot:item.product_quantity="{item}">
-                    <template v-if="item.product">
-                        {{item.product.quantity}}
-                    </template>
-                </template>
                 <template v-slot:item.product_id="{item}">
                     <template v-if="item.product">
                         <a :href="'/admin/products/' + item.product.id + '/edit'">{{item.product.name}}</a>
+                    </template>
+                </template>
+                <template v-slot:item.product_quantity="{item}">
+                    <template v-if="item.product">
+                        {{item.product.quantity}}
                     </template>
                 </template>
                 <template v-slot:item.type="{ item }">
@@ -55,7 +55,7 @@
     import axios from 'axios';
     var debounce = require('lodash.debounce');
     export default {
-        props: ['data'],
+        props:['data', 'product'],
         data () {
             return {
                 search: '',
@@ -80,7 +80,8 @@
                 ],
                 items: this.data.data ? this.data.data : [],
                 totalItems: this.data.total ? this.data.total : [],
-                dataLoaded: false
+                dataLoaded: false,
+                productId: this.product ? this.product : 0
             }
         },
         watch: {
@@ -98,7 +99,8 @@
             getTransactions() {
                 if(this.dataLoaded) {
                     this.loading = true;
-                    axios.get('/admin/transactions/all', {params: {query: this.search, page: this.options.page}})
+                    let path = this.productId ? 'by-product' : 'all';
+                    axios.get(`/admin/transactions/${path}`, {params: {query: this.search, page: this.options.page, product: this.productId}})
                         .then(response => {
                             const results = response.data.results;
                             this.items = results.data;

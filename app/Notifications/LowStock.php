@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -58,7 +59,7 @@ class LowStock extends Notification
     {
         return [
             'product' => $this->product,
-            'details' => 'The quantity of this product has gone below your fixed low quantity mark.'
+            'details' => 'The quantity of this product has gone below your fixed low quantity mark.',
         ];
     }
 }

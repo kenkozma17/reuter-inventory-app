@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 
 class NotificationsController extends Controller
 {
@@ -82,5 +84,12 @@ class NotificationsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function markAsRead(Request $request) {
+        $notificationId = $request->get('id');
+        $notification = DatabaseNotification::find($notificationId);
+        $notification->markAsRead();
+        return response()->json(['success' => true]);
     }
 }

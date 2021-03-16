@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function(){
 
         // Notifications
         Route::resource('notifications',NotificationsController::class);
+        Route::post('notifications/mark',[NotificationsController::class, 'markAsRead']);
     });
 });
 

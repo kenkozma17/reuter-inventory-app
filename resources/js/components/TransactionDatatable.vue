@@ -64,11 +64,11 @@
                     groupBy: [],
                     groupDesc: [],
                     itemsPerPage: this.data.per_page ? this.data.per_page : 5,
-                    multiSort:false,
-                    mustSort:false,
+                    multiSort:true,
+                    mustSort:true,
                     page:1,
                     sortBy: [],
-                    sortDesc: []
+                    sortDesc: [],
                 },
                 headers: [
                     { text: 'Transaction #', value: 'transaction_number'},
@@ -76,7 +76,7 @@
                     { text: 'Transaction Type', value: 'type' },
                     { text: 'Amount (Increased/Decreased)', value: 'quantity' },
                     { text: 'Customer Name', value: 'customer_name' },
-                    { text: 'Date', value: 'date' },
+                    { text: 'Date', value: 'date', sortable: true, sort: (e) => {console.log('sup')} },
                 ],
                 items: this.data.data ? this.data.data : [],
                 totalItems: this.data.total ? this.data.total : [],

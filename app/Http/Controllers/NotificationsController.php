@@ -90,6 +90,8 @@ class NotificationsController extends Controller
         $notificationId = $request->get('id');
         $notification = DatabaseNotification::find($notificationId);
         $notification->markAsRead();
-        return response()->json(['success' => true]);
+
+        $notifications = auth()->user()->unreadNotifications;
+        return response()->json(['success' => true, 'notifications' => $notifications]);
     }
 }

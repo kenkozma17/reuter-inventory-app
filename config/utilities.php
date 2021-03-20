@@ -1,4 +1,4 @@
 <?php
 return [
-  'pagination' => ['count' => 50]
+  'pagination' => ['count' => 80]
 ];

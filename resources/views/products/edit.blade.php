@@ -5,7 +5,7 @@
             <input name="_method" type="hidden" value="PUT">
             @csrf
             <div class="mb-3">
-                <h2 class="h2">Product: <span class="font-bold">{{$product->name}} {{$product->size}} </span></h2>
+                <h2 class="h2">Product: <span class="font-bold">{{$product->name}}  {{$product->size}} </span></h2>
                 <h3 class="h3">Quantity: <span class="font-bold">{{$product->quantity}}</span></h3>
                 <hr class="mt-3">
             </div>

@@ -56,7 +56,7 @@ class ProductsController extends Controller
         try {
             $validator = Validator::make($data, [
                 'name' => 'required|max:75',
-                'quantity' => 'required|numeric',
+                'quantity' => 'required|numeric ',
                 'price' => 'required|numeric',
             ]);
 

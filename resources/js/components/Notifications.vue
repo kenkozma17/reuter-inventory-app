@@ -5,7 +5,7 @@
                  :class="notification.read_at ? '' : 'unread'"
                  v-for="(notification, index) in notifications">
                 <div class="d-flex w-100 justify-content-between">
-                    <h4 class="mb-1 font-weight-bold">{{ notification.data['product']['name'] }}</h4>
+                    <h4 class="mb-1 font-weight-bold">{{ notification.data['product']['name'] }} {{ notification.data['product']['size'] }} {{ notification.data['product']['color'] }}</h4>
                 <small>{{daysAgo(notification.created_at)}}</small>
                 </div>
                 <p class="mb-1 font-weight-bold">Current Quantity: {{ notification.data['product']['quantity'] }}</p>

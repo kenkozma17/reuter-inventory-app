@@ -120,7 +120,7 @@ class ProductsController extends Controller
         $data = $request->all();
         try {
             $validator = Validator::make($data, [
-                'name' => ['required', Rule::unique('products')->ignore($id)],
+                'name' => 'required',
 //                'quantity' => 'required|numeric',
                 'price' => 'required|numeric',
             ]);

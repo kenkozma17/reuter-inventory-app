@@ -26,7 +26,7 @@
                 </template>
                 <template v-slot:item.product_id="{item}">
                     <template v-if="item.product">
-                        <a :href="'/admin/products/' + item.product.id + '/edit'">{{item.product.name}}</a>
+                        <a :href="'/admin/products/' + item.product.id + '/edit'">{{item.product.name}} {{item.product.size}} {{item.product.color}}</a>
                     </template>
                 </template>
                 <template v-slot:item.product_quantity="{item}">

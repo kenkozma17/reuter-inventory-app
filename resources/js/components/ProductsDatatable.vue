@@ -24,6 +24,9 @@
                     <template v-slot:item.name="{ item }">
                         <a :href="'/admin/products/' + item.id + '/edit'">{{item.name}}</a>
                     </template>
+                    <template v-slot:item.price="{ item }">
+                        <p>{{ item.price}}</p>
+                    </template>
                     <template v-slot:item.has_notification="{ item }">
                         <v-chip class="ma-2 text-white v-chip--active"
                                 :class="item.has_notification ? 'bg-green-500' : 'bg-red-500'">
@@ -61,6 +64,7 @@
                     { text: 'Actions', value: 'trans',},
                     { text: 'Product Name', value: 'name',},
                     { text: 'Quantity', value: 'quantity' },
+                    { text: 'Price', value: 'price',},
                     { text: 'Size', value: 'size' },
                     { text: 'Color', value: 'color' },
                     { text: 'Notifications Enabled?', value: 'has_notification' },
@@ -83,6 +87,12 @@
             },
         },
         methods: {
+            formatCurrency() {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'PHP',
+                });
+            },
             deleteProduct(id) {
                 if(confirm('Are you sure you want to delete this product?')) {
                     axios.delete(`/admin/products/${id}`)

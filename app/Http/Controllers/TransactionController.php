@@ -161,6 +161,7 @@ class TransactionController extends Controller
     public function getTransactions(Request $request) {
         $query = $request->get('query');
         $transactions = Transaction::with('product')
+            ->orderBy('created_at', 'desc')
             ->orWhereHas('product', function($q) use ($query){
                 $q->where('deleted_at', NULL)->where('name', 'LIKE', '%'. $query. '%');
             })
